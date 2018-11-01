@@ -1,0 +1,23 @@
+server {
+
+  charset utf-8;
+  listen 80;
+  root   /app;
+
+  __REDIRECT_HTTPS_SETTING__
+
+  location / {
+    try_files $uri /index.html;
+  }
+
+  location = /index.html {
+      add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+      expires off;
+  }
+
+  __PROXY_SETTING__
+
+  gzip on;
+  gzip_comp_level 4;
+  gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/xml+rss text/javascript;
+}
